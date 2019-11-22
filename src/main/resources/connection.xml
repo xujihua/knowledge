@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <connectionConfig>
 	<name>connection</name>
-	<driverClass>org.h2.Driver</driverClass>
-	<URL>jdbc:h2:tcp://localhost/./knowledge_db</URL>
-	<user>sa</user>
-	<password></password>
+	<driverClass>org.postgresql.Driver</driverClass>
+	<URL>jdbc:postgresql://172.16.40.118:5432/postgres</URL>
+	<user>postgres</user>
+	<password>1890!Hd</password>
 	<schema>public</schema>
 	<maxConn>5</maxConn>
 	<autocommit>false</autocommit>
