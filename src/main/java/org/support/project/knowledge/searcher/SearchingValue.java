@@ -33,6 +33,8 @@ public class SearchingValue {
     /** 作成者(OR条件) */
     private List<Integer> creators = new ArrayList<Integer>();
 
+    /** 知识id */
+    private List<Long> knowledgesids = new ArrayList<Long>();
     /** 読み出し開始 */
     private int offset;
     /** 読み出し件数 */
@@ -136,7 +138,28 @@ public class SearchingValue {
         }
         return builder.toString();
     }
-
+    /**
+     * @return the knowledgesids
+     */
+    public String getKnowledgesids() {
+        StringBuilder builder = new StringBuilder();
+        int count = 0;
+        for (Long id : knowledgesids) {
+            if (count > 0) {
+                builder.append(SEPARATE);
+            }
+            builder.append(id);
+            count++;
+        }
+        return builder.toString();
+    }
+    /**
+     * Add id
+     * @param id id
+     */
+    public void addKnowledgesids(Long id) {
+        this.knowledgesids.add(id);
+    }
     /**
      * Get templates
      * @return templates
@@ -208,6 +231,7 @@ public class SearchingValue {
     public void setLimit(int limit) {
         this.limit = limit;
     }
+
 
 
 }

@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.ja.JapaneseAnalyzer;
+import org.apache.lucene.analysis.cn.ChineseAnalyzer;
+import org.apache.lucene.analysis.core.SimpleAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
@@ -49,6 +50,7 @@ import org.support.project.web.bean.MessageResult;
 import org.support.project.web.common.HttpStatus;
 import org.support.project.web.config.MessageStatus;
 import org.support.project.web.exception.InvalidParamException;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 /**
  * Luceneを使った検索
@@ -83,12 +85,13 @@ public class LuceneSearcher implements Searcher {
     /** ラベル：テンプレート */
     public static final String FIELD_LABEL_TEMPLATE = LuceneIndexer.FIELD_LABEL_TEMPLATE;
 
+
     /** 検索キーワードを抽出するアナライザー N-gramではなく形態素解析を利用 */
-    // private Analyzer analyzer = new SimpleAnalyzer(Version.LUCENE_4_10_2);
-    private Analyzer analyzer = new JapaneseAnalyzer();
+//   private Analyzer analyzer = new SmartcnAnalyzer(Version.LUCENE_4_10_2);
+    private Analyzer analyzer = new IKAnalyzer();
 
     /**
-     * Indexが格納されているディレクトリのパスを取得
+     * Indexが格納されているディレクトリのパスを取IKAnalyzer.class得
      * 
      * @return
      */
@@ -102,6 +105,7 @@ public class LuceneSearcher implements Searcher {
      * 検索
      * @throws InvalidParamException 
      */
+    @Override
     public List<SearchResultValue> search(final SearchingValue value, int keywordSortType) throws IOException, InvalidTokenOffsetsException, InvalidParamException {
         List<SearchResultValue> resultValues = new ArrayList<>();
 
@@ -249,6 +253,13 @@ public class LuceneSearcher implements Searcher {
             QueryParser queryParser = new QueryParser(Version.LUCENE_4_10_2, FIELD_LABEL_TAGS, analyzer);
             queryParser.setDefaultOperator(Operator.AND);
             Query query = queryParser.parse(value.getTags());
+            container.add(query, BooleanClause.Occur.MUST);
+        }
+
+        if (StringUtils.isNotEmpty(value.getKnowledgesids())) {
+            QueryParser queryParser = new QueryParser(Version.LUCENE_4_10_2, FIELD_LABEL_ID, analyzer);
+            queryParser.setDefaultOperator(Operator.AND);
+            Query query = queryParser.parse(value.getKnowledgesids());
             container.add(query, BooleanClause.Occur.MUST);
         }
         if (StringUtils.isNotEmpty(value.getUsers()) || StringUtils.isNotEmpty(value.getGroups())) {

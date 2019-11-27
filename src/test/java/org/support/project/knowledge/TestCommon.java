@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Locale;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.ja.JapaneseAnalyzer;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.IndexWriterConfig.OpenMode;
@@ -55,6 +54,7 @@ import org.support.project.web.entity.RolesEntity;
 import org.support.project.web.entity.UserGroupsEntity;
 import org.support.project.web.entity.UserRolesEntity;
 import org.support.project.web.entity.UsersEntity;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 /**
  * Abstract class for test.
@@ -186,7 +186,7 @@ public abstract class TestCommon {
         }
         
         // 全文検索エンジンのインデックスの消去
-        Analyzer analyzer = new JapaneseAnalyzer();
+        Analyzer analyzer = new IKAnalyzer();
         AppConfig appConfig = ConfigLoader.load(AppConfig.APP_CONFIG, AppConfig.class);
         File indexDir = new File(appConfig.getIndexPath());
         Directory dir = FSDirectory.open(indexDir);

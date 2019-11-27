@@ -252,7 +252,7 @@ public class KnowledgeDataSelectLogic {
                 templates,
                 param.getLoginedUser(),
                 param.getOffset(),
-                param.getLimit());
+                param.getLimit(),null);
         List<String> ids = new ArrayList<>();
         for (KnowledgesEntity entity : entities) {
             Knowledge result = conv(entity, LIST);

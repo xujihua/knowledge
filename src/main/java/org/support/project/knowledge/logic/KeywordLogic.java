@@ -16,6 +16,7 @@ public class KeywordLogic {
     static {
         REGEX_LIST.put("groups", "(?:groups: *\\((?<groups>[^)]+)\\))");
         REGEX_LIST.put("tags", "(?:tags: *\\((?<tags>[^)]+)\\))");
+        REGEX_LIST.put("id", "(?:id:(?<id>[0-9]*))");
     }
 
     public static KeywordLogic get() {
@@ -48,6 +49,7 @@ public class KeywordLogic {
     public String parseKeyword(String text) {
         String parsedText = text.replaceAll(KeywordLogic.REGEX_LIST.get("groups"), "");
         parsedText = parsedText.replaceAll(KeywordLogic.REGEX_LIST.get("tags"), "");
+        parsedText = parsedText.replaceAll(KeywordLogic.REGEX_LIST.get("id"), "");
         return parsedText.trim();
     }
 

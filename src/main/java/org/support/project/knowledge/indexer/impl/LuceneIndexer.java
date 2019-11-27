@@ -3,7 +3,6 @@ package org.support.project.knowledge.indexer.impl;
 import java.io.File;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.ja.JapaneseAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.IntField;
@@ -24,6 +23,7 @@ import org.support.project.common.util.StringUtils;
 import org.support.project.knowledge.config.AppConfig;
 import org.support.project.knowledge.indexer.Indexer;
 import org.support.project.knowledge.indexer.IndexingValue;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 public class LuceneIndexer implements Indexer {
     /** ログ */
@@ -41,14 +41,14 @@ public class LuceneIndexer implements Indexer {
     public static final String FIELD_LABEL_TEMPLATE = "template";
 
     // private Analyzer analyzer = new SimpleAnalyzer(Version.LUCENE_4_10_2);
-    private Analyzer analyzer = new JapaneseAnalyzer();
+    private Analyzer analyzer = new IKAnalyzer();
 
     private String getIndexPath() {
         AppConfig appConfig = ConfigLoader.load(AppConfig.APP_CONFIG, AppConfig.class);
         log.debug("lucene index: " + appConfig.getIndexPath());
         return appConfig.getIndexPath();
     }
-
+    @Override
     public void writeIndex(IndexingValue indexingValue) throws Exception {
         synchronized (FIELD_LABEL_TYPE) {
             boolean create = true;

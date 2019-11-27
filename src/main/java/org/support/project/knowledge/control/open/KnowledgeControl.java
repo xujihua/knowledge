@@ -66,6 +66,7 @@ import org.support.project.knowledge.vo.MarkDown;
 import org.support.project.knowledge.vo.Participations;
 import org.support.project.knowledge.vo.StockKnowledge;
 import org.support.project.knowledge.vo.UploadFile;
+import org.support.project.knowledge.vo.api.Knowledge;
 import org.support.project.web.bean.LabelValue;
 import org.support.project.web.bean.LoginedUser;
 import org.support.project.web.boundary.Boundary;
@@ -344,6 +345,7 @@ public class KnowledgeControl extends KnowledgeControlBase {
         ExGroupsDao groupsDao = ExGroupsDao.get();
         KnowledgeLogic knowledgeLogic = KnowledgeLogic.get();
         KeywordLogic keywordLogic = KeywordLogic.get();
+        KnowledgesDao knowledgesDao = KnowledgesDao.get();
 
         LoginedUser loginedUser = super.getLoginedUser();
         String tag = getParam("tag");
@@ -492,7 +494,7 @@ public class KnowledgeControl extends KnowledgeControlBase {
                 setAttribute("selectedGroupIds", groupIds);
                 setAttribute("searchKeyword", searchKeyword + keyword);
     
-                knowledges.addAll(knowledgeLogic.searchKnowledge(keyword, tags, groups, null, templates, loginedUser, offset * PAGE_LIMIT, PAGE_LIMIT));
+                knowledges.addAll(knowledgeLogic.searchKnowledge(keyword, tags, groups, null, templates, loginedUser, offset * PAGE_LIMIT, PAGE_LIMIT,null));
             } else {
                 // その他(キーワード検索)
                 LOG.trace("search");
@@ -500,7 +502,19 @@ public class KnowledgeControl extends KnowledgeControlBase {
                 List<TagsEntity> tags = null;
                 List<Integer> groupIds = new ArrayList<Integer>();
                 List<Integer> tagIds = new ArrayList<Integer>();
-    
+                List<Long> knowledgesEntityIds = new ArrayList<Long>();
+                List<KnowledgesEntity> knowledgesEntitys=new ArrayList<>();
+                if(loginedUser!=null){
+                    String idsKeyword = keywordLogic.parseQuery("id", keyword);
+                    if(idsKeyword!=null){
+                        for (String id: idsKeyword.split(",")){
+                            knowledgesEntityIds.add(Long.valueOf(idsKeyword));
+                            KnowledgesEntity knowledgesEntity = knowledgesDao.selectOnKey(Long.valueOf(idsKeyword));
+                            knowledgesEntitys.add(knowledgesEntity);
+                        }
+                    }
+                }
+
                 if (loginedUser != null) {
                     String groupKeyword = keywordLogic.parseQuery("groups", keyword);
                     if (groupKeyword != null) {
@@ -545,7 +559,7 @@ public class KnowledgeControl extends KnowledgeControlBase {
                 }
                 setAttribute("creators", creatorUserEntities);
                 
-                knowledges.addAll(knowledgeLogic.searchKnowledge(keyword, tags, groups, creatorUserEntities, templates, loginedUser, offset * PAGE_LIMIT, PAGE_LIMIT));
+                knowledges.addAll(knowledgeLogic.searchKnowledge(keyword, tags, groups, creatorUserEntities, templates, loginedUser, offset * PAGE_LIMIT, PAGE_LIMIT,knowledgesEntitys));
             }
             
             // pin留めの記事取得

@@ -457,8 +457,6 @@ public class KnowledgeLogic {
      * @param entity
      * @param tags
      * @param template
-     * @param groups
-     * @param loginedUser
      * @throws Exception
      */
     private void saveIndex(KnowledgesEntity entity, List<TagsEntity> tags, List<LabelValue> targets, TemplateMastersEntity template, Integer creator)
@@ -542,7 +540,7 @@ public class KnowledgeLogic {
      */
     public List<KnowledgesEntity> searchKnowledge(String keyword, List<TagsEntity> tags, List<GroupsEntity> groups, 
             List<UsersEntity> creators, String[] templates, LoginedUser loginedUser,
-            Integer offset, Integer limit) throws Exception {
+            Integer offset, Integer limit,List<KnowledgesEntity> knowledgesEntitys) throws Exception {
         SearchingValue searchingValue = new SearchingValue();
         searchingValue.setKeyword(keyword);
         searchingValue.setOffset(offset);
@@ -568,6 +566,12 @@ public class KnowledgeLogic {
                 searchingValue.addCreator(creator.getUserId());
             }
         }
+        if (creators != null) {
+            for (KnowledgesEntity knowledgesEntity : knowledgesEntitys) {
+                searchingValue.addKnowledgesids(knowledgesEntity.getKnowledgeId());
+            }
+        }
+
         
         // ログインしてない場合はグループ検索ができないので公開記事のみを対象にして検索する
         if (loginedUser == null) {
@@ -625,7 +629,7 @@ public class KnowledgeLogic {
      * @throws Exception
      */
     public List<KnowledgesEntity> searchKnowledge(String keyword, LoginedUser loginedUser, Integer offset, Integer limit) throws Exception {
-        return searchKnowledge(keyword, null, null, null, null, loginedUser, offset, limit);
+        return searchKnowledge(keyword, null, null, null, null, loginedUser, offset, limit,null);
     }
 
     /**
@@ -1038,7 +1042,6 @@ public class KnowledgeLogic {
      * ナレッジを削除
      * 
      * @param knowledgeId
-     * @param loginedUser
      * @throws Exception
      */
     @Aspect(advice = org.support.project.ormapping.transaction.Transaction.class)
@@ -1239,7 +1242,7 @@ public class KnowledgeLogic {
      * コメント削除
      * 
      * @param commentsEntity
-     * @param loginedUser
+     * @param
      * @throws Exception
      */
     public void deleteComment(CommentsEntity commentsEntity) throws Exception {
