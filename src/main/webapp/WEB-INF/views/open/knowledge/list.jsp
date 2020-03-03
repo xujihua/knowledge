@@ -175,44 +175,45 @@
         
         <c:if test="${empty types}">
         <div class="row">
-            <div class="col-sm-12">
-                <form role="form" action="<%=request.getContextPath()%>/open.knowledge/list">
-                <input type="hidden" name="from" value="quickFilter" />
-                <a href="#quickFilter" data-toggle="collapse">
-                <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                <i class="fa fa-filter" aria-hidden="true"></i>Filter</a>
-                <div id="quickFilter" class="collapse">
-                <%
-                    List<TemplateMastersEntity> selectedFilter = (List) request.getAttribute("selectedTemplates");
-                    List<Integer> selectedKeys = new ArrayList<>();
-                    if (selectedFilter != null) {
-                        for (TemplateMastersEntity item : selectedFilter) {
-                            if (item != null) {
-                                selectedKeys.add(item.getTypeId());
-                            }
-                        }
-                    }
-                    Map<Integer, TemplateMastersEntity> templates = (Map) request.getAttribute("templates");
-                    Iterator<Integer> iterator = templates.keySet().iterator();
-                    while (iterator.hasNext()) {
-                        Integer key = iterator.next();
-                        TemplateMastersEntity template = templates.get(key);
-                        String checked = "";
-                        if (selectedKeys.contains(template.getTypeId())) checked = "checked";
-                %>
-                    <label><input type="checkbox" name="template" value="<%= template.getTypeId() %>" <%= checked %> />
-                    <i class="fa <%= HtmlUtils.escapeHTML(template.getTypeIcon()) %>"></i>
-                    <%= HtmlUtils.escapeHTML(template.getTypeName()) %>&nbsp;
-                    </label>
-                <%
-                    }
-                %>
-                <button class="btn btn-primary btn-xs" type="submit">
-                    <i class="fa fa-search"></i>&nbsp;<%= jspUtil.label("label.apply") %>
-                </button>
-                </div>
-                </form>
-            </div>
+
+<%--            <div class="col-sm-12">  注释掉列表页 filter--%>
+<%--                <form role="form" action="<%=request.getContextPath()%>/open.knowledge/list">--%>
+<%--                <input type="hidden" name="from" value="quickFilter" />--%>
+<%--                <a href="#quickFilter" data-toggle="collapse">--%>
+<%--                <i class="fa fa-angle-double-right" aria-hidden="true"></i>--%>
+<%--                <i class="fa fa-filter" aria-hidden="true"></i>Filter</a>--%>
+<%--                <div id="quickFilter" class="collapse">--%>
+<%--                <%--%>
+<%--                    List<TemplateMastersEntity> selectedFilter = (List) request.getAttribute("selectedTemplates");--%>
+<%--                    List<Integer> selectedKeys = new ArrayList<>();--%>
+<%--                    if (selectedFilter != null) {--%>
+<%--                        for (TemplateMastersEntity item : selectedFilter) {--%>
+<%--                            if (item != null) {--%>
+<%--                                selectedKeys.add(item.getTypeId());--%>
+<%--                            }--%>
+<%--                        }--%>
+<%--                    }--%>
+<%--                    Map<Integer, TemplateMastersEntity> templates = (Map) request.getAttribute("templates");--%>
+<%--                    Iterator<Integer> iterator = templates.keySet().iterator();--%>
+<%--                    while (iterator.hasNext()) {--%>
+<%--                        Integer key = iterator.next();--%>
+<%--                        TemplateMastersEntity template = templates.get(key);--%>
+<%--                        String checked = "";--%>
+<%--                        if (selectedKeys.contains(template.getTypeId())) checked = "checked";--%>
+<%--                %>--%>
+<%--                    <label><input type="checkbox" name="template" value="<%= template.getTypeId() %>" <%= checked %> />--%>
+<%--                    <i class="fa <%= HtmlUtils.escapeHTML(template.getTypeIcon()) %>"></i>--%>
+<%--                    <%= HtmlUtils.escapeHTML(template.getTypeName()) %>&nbsp;--%>
+<%--                    </label>--%>
+<%--                <%--%>
+<%--                    }--%>
+<%--                %>--%>
+<%--                <button class="btn btn-primary btn-xs" type="submit">--%>
+<%--                    <i class="fa fa-search"></i>&nbsp;<%= jspUtil.label("label.apply") %>--%>
+<%--                </button>--%>
+<%--                </div>--%>
+<%--                </form>--%>
+<%--            </div>--%>
         </div>
         </c:if>
 

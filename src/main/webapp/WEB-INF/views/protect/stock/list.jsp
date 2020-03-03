@@ -49,7 +49,7 @@
 
 	<c:if test="${empty stocks}">
 		<div class="col-sm-12">
-		empty
+		空的
 		</div>
 	</c:if>
 	

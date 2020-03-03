@@ -42,7 +42,7 @@
 
 	<c:if test="${empty knowledges}">
 		<div class="col-sm-12">
-		empty
+		空的
 		</div>
 	</c:if>
 	

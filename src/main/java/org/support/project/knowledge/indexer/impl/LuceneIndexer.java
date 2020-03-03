@@ -43,6 +43,7 @@ public class LuceneIndexer implements Indexer {
     // private Analyzer analyzer = new SimpleAnalyzer(Version.LUCENE_4_10_2);
     private Analyzer analyzer = new IKAnalyzer();
 
+
     private String getIndexPath() {
         AppConfig appConfig = ConfigLoader.load(AppConfig.APP_CONFIG, AppConfig.class);
         log.debug("lucene index: " + appConfig.getIndexPath());

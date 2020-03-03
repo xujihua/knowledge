@@ -2,7 +2,7 @@
 <connectionConfig>
 	<name>connection</name>
 	<driverClass>org.postgresql.Driver</driverClass>
-	<URL>jdbc:postgresql://172.16.40.118:5432/postgres</URL>
+	<URL>jdbc:postgresql://10.165.153.247:5432/postgres</URL>
 	<user>postgres</user>
 	<password>1890!Hd</password>
 	<schema>public</schema>

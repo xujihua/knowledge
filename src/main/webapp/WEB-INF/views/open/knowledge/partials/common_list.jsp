@@ -118,18 +118,18 @@
                     href="<%=request.getContextPath()%>/open.knowledge/view/<%=jspUtil.out("knowledge.knowledgeId")%><%=jspUtil.out("params")%>#comments">
                     <i class="fa fa-comments-o"></i>&nbsp;× <%=jspUtil.out("knowledge.commentCount")%>
                 </a> &nbsp;
-                <% 
-                TemplateMastersEntity template = templates.get(knowledge.getTypeId());
-                if (template == null) {
-                    template = templates.get(TemplateLogic.TYPE_ID_KNOWLEDGE);
-                }
-                %>
-                <i class="fa <%= template.getTypeIcon() %>"></i>
-                <%= template.getTypeName() %>
+<%--                <% --%>
+<%--                TemplateMastersEntity template = templates.get(knowledge.getTypeId());--%>
+<%--                if (template == null) {--%>
+<%--                    template = templates.get(TemplateLogic.TYPE_ID_KNOWLEDGE);--%>
+<%--                }--%>
+<%--                %>--%>
+<%--                <i class="fa <%= template.getTypeIcon() %>"></i>--%>
+<%--                <%= template.getTypeName() %>--%>
                 &nbsp;
-                <%=jspUtil.is(String.valueOf(KnowledgeLogic.PUBLIC_FLAG_PUBLIC), "knowledge.publicFlag", jspUtil.label("label.public.view"))%>
-                <%=jspUtil.is(String.valueOf(KnowledgeLogic.PUBLIC_FLAG_PRIVATE), "knowledge.publicFlag", jspUtil.label("label.private.view"))%>
-                <%=jspUtil.is(String.valueOf(KnowledgeLogic.PUBLIC_FLAG_PROTECT), "knowledge.publicFlag", jspUtil.label("label.protect.view"))%>
+<%--                <%=jspUtil.is(String.valueOf(KnowledgeLogic.PUBLIC_FLAG_PUBLIC), "knowledge.publicFlag", jspUtil.label("label.public.view"))%>--%>
+<%--                <%=jspUtil.is(String.valueOf(KnowledgeLogic.PUBLIC_FLAG_PRIVATE), "knowledge.publicFlag", jspUtil.label("label.private.view"))%>--%>
+<%--                <%=jspUtil.is(String.valueOf(KnowledgeLogic.PUBLIC_FLAG_PROTECT), "knowledge.publicFlag", jspUtil.label("label.protect.view"))%>--%>
                 <c:if test="${targets.containsKey(knowledge.knowledgeId)}">
                     <c:forEach var="target" items="${ targets.get(knowledge.knowledgeId) }">
                         <c:choose>
